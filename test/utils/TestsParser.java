@@ -29,6 +29,6 @@ public class TestsParser {
 		Universe universe = Parser.parse(baseFilename, enterpriseFilename);
 		assertTrue(universe.getEnterpriseScenario().length == 10);
 		assertEquals("FRANCE TELECOM EXPERTISE ET SERVICE", universe.getEnterpriseScenario()[0]);
-		assertTrue(universe.getListBase().size() == 23);
+		assertTrue(universe.getListBases().size() == 23);
 	}
 }

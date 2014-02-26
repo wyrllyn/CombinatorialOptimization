@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Universe {
 	private String enterpriseScenario [];
-	private ArrayList<Base> listBase;
+	private ArrayList<Base> listBases;
 	
 	public Universe(String[] enterpriseScenario,
 			ArrayList<Base> listBase) {
 		super();
 		this.enterpriseScenario = enterpriseScenario;
-		this.listBase = listBase;
+		this.listBases = listBase;
 	}
 	
 	public String[] getEnterpriseScenario() {
@@ -19,11 +19,11 @@ public class Universe {
 	public void setEnterpriseScenario(String[] enterpriseScenario) {
 		this.enterpriseScenario = enterpriseScenario;
 	}
-	public ArrayList<Base> getListBase() {
-		return listBase;
+	public ArrayList<Base> getListBases() {
+		return listBases;
 	}
-	public void setListBase(ArrayList<Base> listBase) {
-		this.listBase = listBase;
+	public void setListBases(ArrayList<Base> listBase) {
+		this.listBases = listBase;
 	}
 	
 	

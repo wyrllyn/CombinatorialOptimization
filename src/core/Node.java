@@ -10,7 +10,24 @@ public class Node {
 	private Node father;
 	private ArrayList<Node> sons;
 	
+	public Node(int cost, ArrayList<Base> history,
+			ArrayList<String> alreadyFound, Node father, ArrayList<Node> sons) {
+		super();
+		this.cost = cost;
+		this.history = history;
+		this.alreadyFound = alreadyFound;
+		this.father = father;
+		this.sons = sons;
+	}	
 	
+	public Node() {
+		this.cost = 0;
+		this.history = new ArrayList<>();
+		this.alreadyFound = new ArrayList<>();
+		this.father = null;
+		this.sons = new ArrayList<>();
+	}
+
 	public int getCost() {
 		return cost;
 	}
@@ -21,6 +38,7 @@ public class Node {
 	public ArrayList<Base> getHistory() {
 		return history;
 	}
+
 	public void setHistory(ArrayList<Base> history) {
 		this.history = history;
 	}

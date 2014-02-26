@@ -67,7 +67,7 @@ public class Parser {
 			enterprises[i] = line;
 		}
 		
-		return new Base(cost, enterprises);
+		return new Base(cost, enterprises, fileName);
 	}
 
 }
