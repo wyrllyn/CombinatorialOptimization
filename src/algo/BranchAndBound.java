@@ -9,13 +9,12 @@ import core.Universe;
 public class BranchAndBound {
 	
 	protected Universe multiverse;
-	private Node root = new Node();
 	
 	public BranchAndBound(Universe theVerse) {
 		this.multiverse = theVerse;
 	}
 	
-	protected void removeUselessBases(){
+	public void removeUselessBases(){
 		ArrayList<Base> bases = multiverse.getListBases();
 		String [] enterprises = multiverse.getEnterpriseScenario();
 		ArrayList<Base> toKeep = new ArrayList<Base>();	
@@ -31,32 +30,70 @@ public class BranchAndBound {
 		multiverse.setListBases(toKeep);
 	}
 
-	public void thisIsAMotherFuckinBranchAndBoundAlgorithm(Node currentNode){
+	public Node thisIsAMotherFuckinBranchAndBoundAlgorithm(Node currentNode){
 		int bestCost = -1;
 		Node bestNode = null;
+		System.out.println("New BnB call");
 		for (Base base : multiverse.getListBases()) {
+			if (currentNode.getHistory().contains(base)) {
+				continue;
+			}
+			
+			System.out.println("\tCurrent base:" + base.getName());
+			System.out.println("\tCurrent found list:");
+			for (String found : currentNode.getAlreadyFound()) {
+				System.out.println("\t\t" + found);
+			}
 			ArrayList<Base> history = new ArrayList<Base>(currentNode.getHistory());
 			history.add(base);
-			ArrayList<String> alreadyFound = new ArrayList<String>(currentNode.getAlreadyFound());//TODO update that thing properly
-			int cost = base.getCost() + currentNode.getCost();
+			ArrayList<String> alreadyFound = new ArrayList<String>(currentNode.getAlreadyFound());
 			ArrayList<Node> sons = new ArrayList<Node>();
+			
+			int cost = base.getCost() + currentNode.getCost();
+			updateAlreadyFound(alreadyFound, base, multiverse.getEnterpriseScenario());
+			
+			System.out.println("\tto find");
+			for (String ent : multiverse.getEnterpriseScenario()){
+				System.out.println("\t\t "+ent);
+			}
+			
+			System.out.println("\talreadyfound");
+			for (String found : alreadyFound){
+				System.out.println("\t\t " + found);
+			}
 			
 			Node node = new Node(cost, history, alreadyFound, currentNode, sons);
 			currentNode.addSon(node);
 			
-			
-			
 			if (areWeDone(alreadyFound)) {
+				System.out.println("We are done");
 				if(bestCost < 0 || cost < bestCost){
 					bestCost = cost;
 					bestNode = node;
+					System.out.println("Saving new best cost: " + bestCost);
 				}
 				break;
+			}
+			
+			if ((bestCost > 0 && cost < bestCost) || (bestCost < 0)){
+				bestNode = thisIsAMotherFuckinBranchAndBoundAlgorithm(node);
+			}
+		}
+		return bestNode;
+	}
+
+	public static void updateAlreadyFound(ArrayList<String> alreadyFound, Base base,
+			String[] enterpriseScenario) {
+		for (String enterprise: enterpriseScenario) {
+			//System.out.println(" update method, current : " + enterprise);
+			if (!alreadyFound.contains(enterprise) && base.contains(enterprise)) {
+				//System.out.println("added");
+				alreadyFound.add(enterprise);
 			}
 		}
 	}
 
-	private boolean areWeDone(ArrayList<String> alreadyFound) {
+	public boolean areWeDone(ArrayList<String> alreadyFound) {
 		return alreadyFound.size() == multiverse.getEnterpriseScenario().length;
 	}
 	
