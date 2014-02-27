@@ -11,9 +11,9 @@ import core.Universe;
 
 public class TestsParser {
 	
-	private static String baseFilename = "resources/data/Scenarios\\Liste Bases\\Liste Bases1.txt"; 
-	private static String enterpriseFilename = "resources/data/Scenarios\\Liste Entreprises\\Liste Ent1.txt";
-	private static String baseBase = "resources/data/Bases\\Base 1.txt";
+	public static String baseFilename = "resources/data/Scenarios\\Liste Bases\\Liste Bases1.txt"; 
+	public static String enterpriseFilename = "resources/data/Scenarios\\Liste Entreprises\\Liste Ent1.txt";
+	public static String baseBase = "resources/data/Bases\\Base 1.txt";
 
 	@Test
 	public void test_parseBase() throws IOException {

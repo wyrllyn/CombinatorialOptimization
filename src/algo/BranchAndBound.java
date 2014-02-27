@@ -30,9 +30,7 @@ public class BranchAndBound {
 		multiverse.setListBases(toKeep);
 	}
 
-	public Node thisIsAMotherFuckinBranchAndBoundAlgorithm(Node currentNode){
-		int bestCost = -1;
-		Node bestNode = null;
+	public Node thisIsAMotherFuckinBranchAndBoundAlgorithm(Node currentNode, int bestCost, Node bestNode){
 		System.out.println("New BnB call");
 		for (Base base : multiverse.getListBases()) {
 			if (currentNode.getHistory().contains(base)) {
@@ -41,9 +39,9 @@ public class BranchAndBound {
 			
 			System.out.println("\tCurrent base:" + base.getName());
 			System.out.println("\tCurrent found list:");
-			for (String found : currentNode.getAlreadyFound()) {
+			/*for (String found : currentNode.getAlreadyFound()) { //TODO: debug mode print
 				System.out.println("\t\t" + found);
-			}
+			}*/
 			ArrayList<Base> history = new ArrayList<Base>(currentNode.getHistory());
 			history.add(base);
 			ArrayList<String> alreadyFound = new ArrayList<String>(currentNode.getAlreadyFound());
@@ -52,7 +50,7 @@ public class BranchAndBound {
 			int cost = base.getCost() + currentNode.getCost();
 			updateAlreadyFound(alreadyFound, base, multiverse.getEnterpriseScenario());
 			
-			System.out.println("\tto find");
+			/*System.out.println("\tto find");
 			for (String ent : multiverse.getEnterpriseScenario()){
 				System.out.println("\t\t "+ent);
 			}
@@ -61,7 +59,7 @@ public class BranchAndBound {
 			for (String found : alreadyFound){
 				System.out.println("\t\t " + found);
 			}
-			
+			*/
 			Node node = new Node(cost, history, alreadyFound, currentNode, sons);
 			currentNode.addSon(node);
 			
@@ -76,7 +74,8 @@ public class BranchAndBound {
 			}
 			
 			if ((bestCost > 0 && cost < bestCost) || (bestCost < 0)){
-				bestNode = thisIsAMotherFuckinBranchAndBoundAlgorithm(node);
+				bestNode = thisIsAMotherFuckinBranchAndBoundAlgorithm(node, bestCost, bestNode);
+				bestCost = bestNode.getCost();
 			}
 		}
 		return bestNode;
@@ -85,9 +84,7 @@ public class BranchAndBound {
 	public static void updateAlreadyFound(ArrayList<String> alreadyFound, Base base,
 			String[] enterpriseScenario) {
 		for (String enterprise: enterpriseScenario) {
-			//System.out.println(" update method, current : " + enterprise);
 			if (!alreadyFound.contains(enterprise) && base.contains(enterprise)) {
-				//System.out.println("added");
 				alreadyFound.add(enterprise);
 			}
 		}

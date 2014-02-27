@@ -2,16 +2,22 @@ package algo;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import utils.Parser;
+import utils.TestsParser;
 
 import core.Base;
 import core.Node;
 import core.Universe;
 
 public class TestsBranchAndBound {
+	
+	public static String testBaseFilename = "resources/data/Scenarios\\Liste Bases\\Liste Bases Test.txt"; 
 
 	private Universe verse;
 	private Base base;
@@ -111,16 +117,33 @@ public class TestsBranchAndBound {
 	public void test_big() {
 		bnb.removeUselessBases();
 		Node root = new Node();
-		Node result = bnb.thisIsAMotherFuckinBranchAndBoundAlgorithm(root);
+		Node result = bnb.thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
 		assertNotNull(result);
-		System.out.println(result.getCost());
-		for (Base base : result.getHistory()) {
-			System.out.println(base.getName());
-		}
+		assertTrue(result.getCost() == cost * 2);
+		assertTrue(result.getHistory().contains(base));
+		assertTrue(result.getHistory().contains(base2));
+	}
+	
+	
+	
+	@Test
+	public void test_bigger() throws IOException {
+		verse = Parser.parse(testBaseFilename, TestsParser.enterpriseFilename);
+		bnb = new BranchAndBound(verse);
+		bnb.removeUselessBases();
+		Node root = new Node();
+		Node result = bnb.thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
+		assertNotNull(result);
 	}
 	
 	@Test
-	public void test_bigger() {
-		
+	public void test_even_bigger() throws IOException {
+		verse = Parser.parse(TestsParser.baseFilename, TestsParser.enterpriseFilename);
+		bnb = new BranchAndBound(verse);
+		bnb.removeUselessBases();
+		Node root = new Node();
+		Node result = bnb.thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
+		assertNotNull(result);
+		System.out.println("final cost:" + result.getCost());
 	}
 }
