@@ -1,33 +1,17 @@
 package algo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import core.Base;
 import core.Node;
 import core.Universe;
 
-public class BranchAndBound {
-	
-	protected Universe multiverse;
+public class BranchAndBound extends Algo{
 	
 	public BranchAndBound(Universe theVerse) {
-		this.multiverse = theVerse;
-	}
-	
-	public void removeUselessBases(){
-		ArrayList<Base> bases = multiverse.getListBases();
-		String [] enterprises = multiverse.getEnterpriseScenario();
-		ArrayList<Base> toKeep = new ArrayList<Base>();	
-		
-		for (Base base : bases){
-			for (String ent : enterprises){
-				if (base.contains(ent)){
-					toKeep.add(base);
-					break;
-				}
-			}			
-		}
-		multiverse.setListBases(toKeep);
+		super(theVerse);
 	}
 
 	public Node thisIsAMotherFuckinBranchAndBoundAlgorithm(Node currentNode, int bestCost, Node bestNode){
@@ -36,12 +20,7 @@ public class BranchAndBound {
 			if (currentNode.getHistory().contains(base)) {
 				continue;
 			}
-			
-			System.out.println("\tCurrent base:" + base.getName());
-			System.out.println("\tCurrent found list:");
-			/*for (String found : currentNode.getAlreadyFound()) { //TODO: debug mode print
-				System.out.println("\t\t" + found);
-			}*/
+
 			ArrayList<Base> history = new ArrayList<Base>(currentNode.getHistory());
 			history.add(base);
 			ArrayList<String> alreadyFound = new ArrayList<String>(currentNode.getAlreadyFound());
@@ -49,17 +28,7 @@ public class BranchAndBound {
 			
 			int cost = base.getCost() + currentNode.getCost();
 			updateAlreadyFound(alreadyFound, base, multiverse.getEnterpriseScenario());
-			
-			/*System.out.println("\tto find");
-			for (String ent : multiverse.getEnterpriseScenario()){
-				System.out.println("\t\t "+ent);
-			}
-			
-			System.out.println("\talreadyfound");
-			for (String found : alreadyFound){
-				System.out.println("\t\t " + found);
-			}
-			*/
+
 			Node node = new Node(cost, history, alreadyFound, currentNode, sons);
 			currentNode.addSon(node);
 			
@@ -81,17 +50,17 @@ public class BranchAndBound {
 		return bestNode;
 	}
 
-	public static void updateAlreadyFound(ArrayList<String> alreadyFound, Base base,
-			String[] enterpriseScenario) {
-		for (String enterprise: enterpriseScenario) {
-			if (!alreadyFound.contains(enterprise) && base.contains(enterprise)) {
-				alreadyFound.add(enterprise);
-			}
-		}
-	}
-
-	public boolean areWeDone(ArrayList<String> alreadyFound) {
-		return alreadyFound.size() == multiverse.getEnterpriseScenario().length;
+	@Override
+	public void startAlgo() {
+		Date startDate = new Date();
+		removeUselessBases();
+		Node root = new Node();
+		Node result = thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
+		Date endDate = new Date();
+		//TODO: exec time
+		System.out.println("Final cost = " + result.getCost()
+				+ "\tNumber of nodes = " + root.getTreeSize()
+				+ "\tRunning time = ");
 	}
 	
 }

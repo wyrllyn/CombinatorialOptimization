@@ -75,4 +75,15 @@ public class Node {
 		this.sons.add(son);
 	}
 
+	public int getTreeSize() {
+		int total = 1;
+		if (sons.size() == 0) {
+			return total;
+		}
+		for (Node node : sons) {
+			total += node.getTreeSize();
+		}
+		return total;
+	}
+
 }

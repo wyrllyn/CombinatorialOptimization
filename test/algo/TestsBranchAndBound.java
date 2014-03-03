@@ -144,6 +144,5 @@ public class TestsBranchAndBound {
 		Node root = new Node();
 		Node result = bnb.thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
 		assertNotNull(result);
-		System.out.println("final cost:" + result.getCost());
 	}
 }

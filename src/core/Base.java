@@ -1,6 +1,6 @@
 package core;
 
-public class Base {
+public class Base implements Comparable<Base> {
 	private int cost;
 	private String [] enterprises;
 	private String name;
@@ -40,6 +40,16 @@ public class Base {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public int compareTo(Base base) {
+		return this.cost - base.cost;
+	}
+
+	@Override
+	public String toString() {
+		return "Base [cost=" + cost + ", name=" + name + "]";
 	}
 
 }

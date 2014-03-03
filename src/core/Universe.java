@@ -26,6 +26,15 @@ public class Universe {
 		this.listBases = listBase;
 	}
 	
+	public boolean enterpriseScenarioContains(String ent){
+		for (int i = 0 ; i < enterpriseScenario.length ; i++){
+			if (enterpriseScenario[i].equals(ent)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 
 }
