@@ -42,6 +42,8 @@ public abstract class Algo {
 		return alreadyFound.size() == multiverse.getEnterpriseScenario().length;
 	}
 	
-	public abstract void startAlgo();
+	public void startAlgo(int n) {
+		removeUselessBases();
+	}
 
 }

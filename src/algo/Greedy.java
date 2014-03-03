@@ -115,14 +115,20 @@ public class Greedy extends Algo {
 		
 		return bestBase;
 	}
-	@Override
-	public void startAlgo() {
-		removeUselessBases();
+	
+	public void startAlgo(int n) {
+		super.startAlgo(n);
 		
-		Node currentNode = new Node();
-		Node result = new Node();
-		result = thisIsAMotherFuckinGreedyAlgorithm(setFirstNodeWithRandom(currentNode));
-		System.out.println("Final cost : " +result.getCost());
+		List<Integer> costs = new ArrayList<Integer>(n);
+		for (int i = 0; i < n; i++) {
+			Node currentNode = new Node();
+			Node result = new Node();
+			result = thisIsAMotherFuckinGreedyAlgorithm(setFirstNodeWithRandom(currentNode));
+			System.out.println("Final cost : " +result.getCost());
+			costs.add(result.getCost());
+		}
+		Collections.sort(costs);
+		System.out.println("\nBest cost = " + costs.get(0));
 	}
 
 }

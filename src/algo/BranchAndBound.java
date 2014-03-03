@@ -51,9 +51,9 @@ public class BranchAndBound extends Algo{
 	}
 
 	@Override
-	public void startAlgo() {
+	public void startAlgo(int n) {
+		super.startAlgo(n);
 		Date startDate = new Date();
-		removeUselessBases();
 		Node root = new Node();
 		Node result = thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
 		Date endDate = new Date();
