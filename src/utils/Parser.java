@@ -11,9 +11,21 @@ import java.util.ArrayList;
 import core.Base;
 import core.Universe;
 
+/**
+ * Parser class. Self explanatory.
+ * @author Sara Tari & Adrien Droguet
+ *
+ */
 public class Parser {
 	
-	public static Universe parse(String baseFilename, String enterpriseFilename) throws IOException{
+	/**
+	 * Parses various files in order to create a Universe object.
+	 * @param baseFilename File containing a list of base files.
+	 * @param enterpriseFilename File containing a list of enterprises.
+	 * @return Universe object.
+	 * @throws IOException
+	 */
+	public static Universe parse(String baseFilename, String enterpriseFilename) throws IOException {
 		/////////////////////////
 		// Parse the base file //
 		/////////////////////////
@@ -42,19 +54,31 @@ public class Parser {
 		return new Universe(enterpriseScenario, listBase);
 	}
 
-	public static String getPrefix(String baseFilename) {
-		return baseFilename.substring(0, baseFilename.lastIndexOf('/') + 1);
+	public static String getPrefix(String filename) {
+		return filename.substring(0, filename.lastIndexOf('/') + 1);
 	}
 
-	public static BufferedReader getBufferedReader(String baseFilename)
+	/**
+	 * 
+	 * @param filename
+	 * @return Opened BufferedReader for the specified file.
+	 * @throws FileNotFoundException
+	 */
+	public static BufferedReader getBufferedReader(String filename)
 			throws FileNotFoundException {
-		File file = new File(baseFilename);
+		File file = new File(filename);
 		FileInputStream fist = new FileInputStream(file);
 		InputStreamReader isr = new InputStreamReader(fist);
 		BufferedReader buffer = new BufferedReader(isr);
 		return buffer;
 	}
 
+	/**
+	 * Parses a base file.
+	 * @param fileName
+	 * @return Base object.
+	 * @throws IOException
+	 */
 	public static Base parseBase(String fileName) throws IOException {
 		BufferedReader buffer = getBufferedReader(fileName);
 		String line = buffer.readLine();

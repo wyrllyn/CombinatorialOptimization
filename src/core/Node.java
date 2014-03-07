@@ -1,17 +1,31 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Our Node object. It has a cost, an history of bases and found enterprises, a father and several sons.
+ * @author Sara Tari & Adrien Droguet
+ *
+ */
 public class Node {
 	
 	private int cost;
-	private ArrayList<Base> history;
-	private ArrayList<String> alreadyFound;
+	private List<Base> history;
+	private List<String> alreadyFound;
 	private Node father;
-	private ArrayList<Node> sons;
+	private List<Node> sons;
 	
-	public Node(int cost, ArrayList<Base> history,
-			ArrayList<String> alreadyFound, Node father, ArrayList<Node> sons) {
+	/**
+	 * Constructs a Node.
+	 * @param cost
+	 * @param history
+	 * @param alreadyFound
+	 * @param father
+	 * @param sons
+	 */
+	public Node(int cost, List<Base> history,
+			List<String> alreadyFound, Node father, List<Node> sons) {
 		super();
 		this.cost = cost;
 		this.history = history;
@@ -20,6 +34,9 @@ public class Node {
 		this.sons = sons;
 	}	
 	
+	/**
+	 * Constructs an empty Node.
+	 */
 	public Node() {
 		this.cost = 0;
 		this.history = new ArrayList<>();
@@ -35,11 +52,11 @@ public class Node {
 		this.cost = cost;
 	}
 
-	public ArrayList<Base> getHistory() {
+	public List<Base> getHistory() {
 		return history;
 	}
 
-	public void setHistory(ArrayList<Base> history) {
+	public void setHistory(List<Base> history) {
 		this.history = history;
 	}
 	
@@ -47,10 +64,10 @@ public class Node {
 		this.history.add(base);
 	}
 	
-	public ArrayList<String> getAlreadyFound() {
+	public List<String> getAlreadyFound() {
 		return alreadyFound;
 	}
-	public void setAlreadyFound(ArrayList<String> alreadyFound) {
+	public void setAlreadyFound(List<String> alreadyFound) {
 		this.alreadyFound = alreadyFound;
 	}
 	
@@ -64,17 +81,25 @@ public class Node {
 	public void setFather(Node father) {
 		this.father = father;
 	}
-	public ArrayList<Node> getSons() {
+	public List<Node> getSons() {
 		return sons;
 	}
-	public void setSons(ArrayList<Node> sons) {
+	public void setSons(List<Node> sons) {
 		this.sons = sons;
 	}
 	
+	/**
+	 * Adds a Node to the sons list.
+	 * @param son
+	 */
 	public void addSon(Node son){
 		this.sons.add(son);
 	}
 
+	/**
+	 * Calculates the size of the tree.
+	 * @return 1 + the size of its sons.
+	 */
 	public int getTreeSize() {
 		int total = 1;
 		if (sons.size() == 0) {

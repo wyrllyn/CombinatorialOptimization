@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import utils.Parser;
 import utils.TestsParser;
-
 import core.Base;
 import core.Node;
 import core.Universe;
@@ -86,7 +86,7 @@ public class TestsBranchAndBound {
 	@Test
 	public void test_removeUselessBases() {
 		bnb.removeUselessBases();
-		ArrayList<Base> bnbBaseList = verse.getListBases();
+		List<Base> bnbBaseList = verse.getListBases();
 		assertFalse(bnbBaseList.contains(uselessBase));
 		assertTrue(bnbBaseList.contains(base));
 		assertTrue(bnbBaseList.contains(base2));
@@ -117,7 +117,7 @@ public class TestsBranchAndBound {
 	public void test_big() {
 		bnb.removeUselessBases();
 		Node root = new Node();
-		Node result = bnb.thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
+		Node result = bnb.recursiveBranchAndBoundAlgorithm(root, -1, null);
 		assertNotNull(result);
 		assertTrue(result.getCost() == cost * 2);
 		assertTrue(result.getHistory().contains(base));
@@ -132,7 +132,7 @@ public class TestsBranchAndBound {
 		bnb = new BranchAndBound(verse);
 		bnb.removeUselessBases();
 		Node root = new Node();
-		Node result = bnb.thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
+		Node result = bnb.recursiveBranchAndBoundAlgorithm(root, -1, null);
 		assertNotNull(result);
 	}
 	
@@ -142,7 +142,7 @@ public class TestsBranchAndBound {
 		bnb = new BranchAndBound(verse);
 		bnb.removeUselessBases();
 		Node root = new Node();
-		Node result = bnb.thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
+		Node result = bnb.recursiveBranchAndBoundAlgorithm(root, -1, null);
 		assertNotNull(result);
 	}
 }

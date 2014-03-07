@@ -1,6 +1,12 @@
 package core;
 
+/**
+ * Base object containing an array of enterprise names and a cost. Bases are comparable by cost.
+ * @author Sara Tari & Adrien Droguet
+ *
+ */
 public class Base implements Comparable<Base> {
+	
 	private int cost;
 	private String [] enterprises;
 	private String name;
@@ -32,7 +38,11 @@ public class Base implements Comparable<Base> {
 		this.enterprises = enterprises;
 	}
 	
-	
+	/**
+	 * 
+	 * @param name
+	 * @return True if the base contains the specified enterprise.
+	 */
 	public boolean contains(String name){
 		for (int i = 0; i < enterprises.length ; i++){
 			if (enterprises[i].equals(name)){

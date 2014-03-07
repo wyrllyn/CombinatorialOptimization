@@ -150,7 +150,7 @@ public class TestsGreedy {
 			
 			Node currentNode = new Node();
 			Node result = new Node();
-			result = greedo.thisIsAMotherFuckinGreedyAlgorithm(greedo.setFirstNodeWithRandom(currentNode));
+			result = greedo.recursiveGreedyAlgorithm(greedo.setFirstNodeWithRandom(currentNode));
 			results.add(result);
 			costs.add(result.getCost());
 		}

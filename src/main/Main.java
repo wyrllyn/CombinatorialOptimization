@@ -29,6 +29,11 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Identify which algorithm was chosen.
+	 * @return An Algo object.
+	 * @throws Exception
+	 */
 	public static Algo getAlgo() throws Exception {
 		if (s_algo.equals("greedy")) {
 			return new Greedy(verse);
@@ -66,6 +71,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Prints how to use the application.
+	 */
 	public static void printHelp() {
 		System.out.println("Usage:");
 		System.out.println("\t-help prints this");

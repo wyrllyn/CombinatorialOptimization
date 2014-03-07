@@ -8,38 +8,50 @@ import core.Base;
 import core.Node;
 import core.Universe;
 
+/**
+ * Greedy algorithm implementation.
+ * @author Sara Tari & Adrien Droguet
+ *
+ */
 public class Greedy extends Algo {
 
+	/**
+	 * Constructs a Greedy object and sort the specified Universe's list of Base in ascending order.
+	 * @param theVerse
+	 */
 	public Greedy(Universe theVerse) {
 		super(theVerse);
 		Collections.sort(theVerse.getListBases());
 	}
 	
-	
-	public Node thisIsAMotherFuckinGreedyAlgorithm(Node currentNode){
+	/**
+	 * Runs the Greedy algorithm recursively.
+	 * @param currentNode
+	 * @return Final node.
+	 */
+	public Node recursiveGreedyAlgorithm(Node currentNode){
 		System.out.println("New Greedy call");
-			
-			Base base = pickABase2(currentNode);		
-			System.out.println("name " + base.getName());
-			
-			ArrayList<Base> history = new ArrayList<Base>(currentNode.getHistory());
-			history.add(base);
-			ArrayList<String> alreadyFound = new ArrayList<String>(currentNode.getAlreadyFound());
-			ArrayList<Node> sons = new ArrayList<Node>();
-			
-			int cost = base.getCost() + currentNode.getCost();
-			updateAlreadyFound(alreadyFound, base, multiverse.getEnterpriseScenario());
-
-			Node node = new Node(cost, history, alreadyFound, currentNode, sons);
-			currentNode.addSon(node);
-			
-			if (areWeDone(alreadyFound)){
-				return node;
-			}
-			else {
-				return thisIsAMotherFuckinGreedyAlgorithm(node);				
-			}
 		
+		Base base = pickABase2(currentNode);		
+		System.out.println("name " + base.getName());
+		
+		ArrayList<Base> history = new ArrayList<Base>(currentNode.getHistory());
+		history.add(base);
+		ArrayList<String> alreadyFound = new ArrayList<String>(currentNode.getAlreadyFound());
+		ArrayList<Node> sons = new ArrayList<Node>();
+		
+		int cost = base.getCost() + currentNode.getCost();
+		updateAlreadyFound(alreadyFound, base, multiverse.getEnterpriseScenario());
+
+		Node node = new Node(cost, history, alreadyFound, currentNode, sons);
+		currentNode.addSon(node);
+		
+		if (areWeDone(alreadyFound)){
+			return node;
+		} else {
+			return recursiveGreedyAlgorithm(node);				
+		}
+	
 	}
 	
 	public Node setFirstNodeWithRandom(Node currentNode){
@@ -60,6 +72,11 @@ public class Greedy extends Algo {
 		return node;
 	}
 	
+	/**
+	 * Picks a randomly chosen base.
+	 * @param node
+	 * @return Unused base.
+	 */
 	public Base randomBase(Node node){
 		List<Base> toPickFrom = new ArrayList<Base>();
 		for (Base base : multiverse.getListBases()) {
@@ -78,6 +95,11 @@ public class Greedy extends Algo {
 		return toPickFrom.get(rand);
 	}
 	
+	/**
+	 * Picks a base.
+	 * @param node
+	 * @return Unused base.
+	 */
 	public Base pickABase(Node node){
 		for (Base base : multiverse.getListBases()){
 			if (node.getHistory().contains(base)) {
@@ -90,6 +112,11 @@ public class Greedy extends Algo {
 		return null;
 	}
 
+	/**
+	 * Also takes into account the number of enterprises found in a base.
+	 * @param node
+	 * @return Unused base.
+	 */
 	public Base pickABase2(Node node){
 		int bestTotal = -1;
 		Base bestBase = null;
@@ -116,6 +143,7 @@ public class Greedy extends Algo {
 		return bestBase;
 	}
 	
+	@Override
 	public void startAlgo(int n) {
 		super.startAlgo(n);
 		
@@ -123,7 +151,7 @@ public class Greedy extends Algo {
 		for (int i = 0; i < n; i++) {
 			Node currentNode = new Node();
 			Node result = new Node();
-			result = thisIsAMotherFuckinGreedyAlgorithm(setFirstNodeWithRandom(currentNode));
+			result = recursiveGreedyAlgorithm(setFirstNodeWithRandom(currentNode));
 			System.out.println("Final cost : " +result.getCost());
 			costs.add(result.getCost());
 		}

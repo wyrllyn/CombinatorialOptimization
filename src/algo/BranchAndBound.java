@@ -1,20 +1,35 @@
 package algo;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import core.Base;
 import core.Node;
 import core.Universe;
 
-public class BranchAndBound extends Algo{
+/**
+ * Branch and bound algorithm implementation.
+ * @author Sara Tari & Adrien Droguet
+ *
+ */
+public class BranchAndBound extends Algo {
 	
+	/**
+	 * Constructs a branch and bound object.
+	 * @param theVerse
+	 */
 	public BranchAndBound(Universe theVerse) {
 		super(theVerse);
 	}
 
-	public Node thisIsAMotherFuckinBranchAndBoundAlgorithm(Node currentNode, int bestCost, Node bestNode){
+	/**
+	 * Runs the Branch and Bound algorithm recursively.
+	 * @param currentNode
+	 * @param bestCost
+	 * @param bestNode
+	 * @return Final Node.
+	 */
+	public Node recursiveBranchAndBoundAlgorithm(Node currentNode, int bestCost, Node bestNode){
 		System.out.println("New BnB call");
 		for (Base base : multiverse.getListBases()) {
 			if (currentNode.getHistory().contains(base)) {
@@ -43,7 +58,7 @@ public class BranchAndBound extends Algo{
 			}
 			
 			if ((bestCost > 0 && cost < bestCost) || (bestCost < 0)){
-				bestNode = thisIsAMotherFuckinBranchAndBoundAlgorithm(node, bestCost, bestNode);
+				bestNode = recursiveBranchAndBoundAlgorithm(node, bestCost, bestNode);
 				bestCost = bestNode.getCost();
 			}
 		}
@@ -55,12 +70,15 @@ public class BranchAndBound extends Algo{
 		super.startAlgo(n);
 		Date startDate = new Date();
 		Node root = new Node();
-		Node result = thisIsAMotherFuckinBranchAndBoundAlgorithm(root, -1, null);
+		Node result = recursiveBranchAndBoundAlgorithm(root, -1, null);
 		Date endDate = new Date();
-		//TODO: exec time
+		long time = endDate.getTime() - startDate.getTime();
+		
 		System.out.println("Final cost = " + result.getCost()
 				+ "\tNumber of nodes = " + root.getTreeSize()
-				+ "\tRunning time = ");
+				+ "\tRunning time = " + (time / 1000) + " s");
 	}
+
+
 	
 }
